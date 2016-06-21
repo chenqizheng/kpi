@@ -97,7 +97,9 @@ a{ color: #333;}
     border-bottom: 1px solid #e3e3e3;
     color: #e3e3e3;
     background-color: #fff;
-    position: relative;
+    position: fixed;
+    top:0px;
+    left:0px;
 }
 .navbar a{
     height: 100%;
@@ -152,7 +154,7 @@ a{ color: #333;}
     margin-top: 43px;
 }
 .person-list-department{
-    margin-top: 33px;
+    margin-top: 40px;
 }
 .person-info .left{
     -webkit-flex-shrink: 1;
@@ -173,7 +175,7 @@ a{ color: #333;}
 .person-list ul li{padding: 10px 0 15px;border-bottom: 1px solid #e3e3e3;overflow: hidden}
 .person-list ul li .left{ float: left;}
 .person-list ul li .right{float: right;font-size: 12px;}
-.person-list ul li .left span{ border-radius: 50%;font-size:10px;line-height:15px;background: #52a6df;margin-right:6px;color: #fff;width: 15px; height: 15px; display: inline-block; text-align: center;}
+.person-list ul li .left span{ border-radius: 50%;font-size:10px;line-height:16px;background: #52a6df;margin-right:6px;color: #fff;width: 16px; height: 16px; display: inline-block; text-align: center;}
 .person-list ul li .left i{margin-left: 10px;}
 .person-list ul li .right span{margin-left: 15px;}
 .progress {
@@ -218,7 +220,7 @@ a{ color: #333;}
     transition-duration: 400ms;
     overflow: hidden;
 }
-.mask-content{position: absolute;background-color: #ededed;z-index: 1001; width: 100%;}
+.mask-content{position: fixed;background-color: #ededed;z-index: 1001; width: 100%; top: 42px;}
 .nav-list{float: left;width: 70px;}
 .nav-list li{ font-size: 12px;line-height: 60px;text-align: center;border-bottom:1px solid #cbcbcb;}
 .nav-list li.active{background: #fff;margin-right: -1px;}
@@ -236,15 +238,9 @@ a{ color: #333;}
 .nav-list-03 .circle{width: 6px; height: 6px; border-radius: 50%;background: #ffa42d; display: inline-block;margin-right: 6px; margin-left: -12px;}
 .nav-list-03-01 p{line-height: 40px;overflow: hidden;padding-left:22px;}
 .nav-list-03-01 p.active{background: url("../images/icon-checked.png") no-repeat center right;background-size: auto 35%;color: #52a6df}
-.nav-list-03-01{border-left: 1px solid #e3e3e3;margin-left: 60px;min-height: 174px;}
+.nav-list-03-01{border-left: 1px solid #e3e3e3;margin-left: 60px;min-height: 174px;height: 300px;overflow: auto;}
 .nav-list-04 p{line-height: 40px;border-bottom: 1px solid #e3e3e3;overflow: hidden;padding-left: 13px;}
 .nav-list-04 p.active{background: url("../images/icon-checked.png") no-repeat center right;background-size: auto 35%;color: #52a6df;}
 
-.loading{
-    margin:0 auto;
-    text-align: center;
-    margin-top: -42px;
-    position: absolute;
-    top: 40%;
-    width: 100%;
-}
+.loading{ position: absolute; top:50%;left: 50%; width: 122px; height: 44px;margin-left: -61px; margin-top: -22px;background: rgba(0,0,0,.7);line-height:44px;border-radius: 4px;color: #fff;text-align: center }
+.loading em{ background: url("../images/loading.gif") no-repeat; width: 21px; height: 21px; display: inline-block; background-size: 100% 100%;vertical-align: middle; margin-right: 10px;}

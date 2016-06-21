@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="css/targetExecution.css" />
+</head>
+<body>
+<div class="topfix">
+    <div class="navbar">
+        <a id="Dimension">维度<i class="icon-rowbottom"></i></a><span>|</span>
+        <a id="Metric">指标<i class="icon-rowbottom"></i></a><span>|</span>
+        <a id="Period">期间单位<i class="icon-rowbottom"></i></a>
+    </div>
+    <!--弹窗内容-->
+    <div class="mask-content">
+
+        <ol>
+            <ul id="dimension_list" class="nav-list">
+                <li>部门</li>
+                <li>业务员</li>
+                <li>我的</li>
+            </ul>
+            <div class="nav-content">
+                <div class="nav-list-04">
+                </div>
+
+            </div>
+            <div id="dimension_list_btn_group" class="nav-btn-group">
+                <a id="clear_dimension_list" href="#" class="btn-default">清空选择</a>
+                <a id="ok_dimension_list" href="#"class="btn-info">确定</a>
+            </div>
+        </ol>
+        <ol>
+            <ul class="nav-list">
+                <li class="active"><span class="circle"></span>指标</li>
+            </ul>
+            <div class="nav-content">
+                <div class="nav-list-01">
+                </div>
+
+            </div>
+        </ol>
+        <ol>
+            <ul id="period_list" class="nav-list">
+                <li>按周</li>
+                <li>按月</li>
+                <li>按季</li>
+            </ul>
+            <div id="period_content" class="nav-content">
+                <div class="nav-list-02 nav-list-06">
+                </div>
+                <div class="nav-list-03">
+                    <p>一月</p>
+                    <p>二月</p>
+                    <p>三月</p>
+                    <p>四月</p>
+                    <p>五月</p>
+                    <p>六月</p>
+                    <p>七月</p>
+                    <p>八月</p>
+                    <p>九月</p>
+                    <p>十月</p>
+                    <p>十一月</p>
+                    <p>十二月</p>
+                </div>
+            </div>
+            <div id="period_content_year" class="nav-content">
+                <div class="nav-list-07">
+                </div>
+            </div>
+        </ol>
+    </div>
+</div>
+<div class="clerk-list">
+    <ul class="clerk">
+    </ul>
+</div>
+<div class="target-title"><ul><li><i class="icon-green-line"></i>实际值</li><li><i class="icon-blue-line"></i>目标值</li></ul><span></span></div>
+<div class="target-list">
+    <ul>
+    </ul>
+</div>
+<div class="nodata" style="display:none; width=100px height=100px"><img class="nodata_img" src="images/nodata.jpg"/></div>
+<div class="loading" style="display:none"><em></em>努力加载中</div>
+<div class="tip" style="display:none"><p></p></div>
+<!--mask-->
+<div class="mask"></div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/target_app.js"></script>
+</body>
+</html>

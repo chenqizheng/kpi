@@ -3,23 +3,30 @@ var userID = getUrlParam("userID");
 var today = getUrlParam("today");
 var waUrl = getUrlParam("waUrl");
 var os = getUrlParam("os");
-var Metric = window.localStorage.Metric;
-var Period = window.localStorage.Period;
-var PeriodVal = window.localStorage.PeriodVal;
-var Dimension = window.localStorage.Dimension;
-var RangeTop = window.localStorage.RangeTop;
+var groupId = getUrlParam("groupId");
+var entcode = getUrlParam("encntcode")
+var key = entcode + "_" + groupId + "_" + userID + "_";
+var Metric = window.localStorage[key + "Metric"];
+var Period = window.localStorage[key + "Period"];
+var PeriodVal = window.localStorage[key + "PeriodVal"];
+var Dimension = window.localStorage[key + "Dimension"];
+var RangeTop = window.localStorage[key + "RangeTop"];
 
 var barShowIndex;
 var condList;
 var needReload = false;
+var clickable = true;
 
 $(function() {
     $(".row-left").css('top', 18);
-    window.onscroll = function() {
-        $(".topfix").css("top", $(window).scrollTop());
-    };
+    // window.onscroll = function() {
+    //     $(".topfix").css("top", $(window).scrollTop());
+    // };
     $(".navbar a").each(function(index, content) {
         $(content).on('click', function() {
+            if (!clickable) {
+                return;
+            }
             if (barShowIndex == index) {
                 hideSelectBar();
                 if (needReload) {
@@ -141,7 +148,6 @@ function getData() {
                 return;
             }
             var kpilist = response.wacomponents.wacomponent[0].actions.action[0].resresult.servicecodesres.servicecoderes[0].resdata.struct[0].kpilist;
-            if (os == "ios") {} else if (os == "android") {}
             if (kpilist.datalist instanceof Array) {
                 var isIgnoreMine = false;
                 for (var i = 0; i < kpilist.datalist.length; i++) {
@@ -226,11 +232,18 @@ function getData() {
 }
 
 function initList(unit) {
+    function getYVal(yVal) {
+        if (Metric == "saleinvoicesum" || Metric == "saleordersum" || Metric == "saledeliversum" || Metric == "argatheringsum") {
+            return fmoney(yVal, 2);
+        } else {
+            return yVal;
+        }
+    }
     var isError = (rank[0] == 'Error');
     var myRank = (yVal[0] == '0' ? "" : (isError ? "" : ("第" + rank[0] + "名")));
     $(".person-info .left h4").text(xVal[0]);
     $(".person-info .left p").text(myRank);
-    $(".person-info span ").text(yVal[0] + ((unit == undefined) ? "" : unit));
+    $(".person-info span ").text(getYVal(yVal[0]) + ((unit == undefined) ? "" : unit));
     $(".person-list ul").empty();
     var startIndex = 0;
     var isDepartment = false;
@@ -252,7 +265,7 @@ function initList(unit) {
             "                <div class=\"left\">\n" +
             "                    <span>" + temp + "</span>" + xVal[i] + (temp == 1 ? "<i class=\"icon-first\"></i>\n" : "") +
             "                </div>\n" +
-            "                <div class=\"right\"><span>" + yVal[i] + unit + "</span></div>\n" +
+            "                <div class=\"right\"><span>" + getYVal(yVal[i]) + (unit == undefined ? "" : unit) + "</span></div>\n" +
             "            </div>\n" +
             "            <div class=\"progress\">\n" +
             "                <div class=\"progress-bar first\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: " + progress + "%;\">\n" +
@@ -380,8 +393,8 @@ function initCondList() {
                 $(this).prepend("<span class=\"circle\"></span>");
                 periodSelect = index;
                 Period = condList[1].itemlist[index].value;
-                initPeriodVal();
                 PeriodVal = undefined;
+                initPeriodVal();
                 if ("year" == Period) {
                     hideSelectBar();
                     $("#PeriodVal").html("<i class=\"icon-rowbottom\"></i>" + condList[1].itemlist[periodSelect].title);
@@ -460,54 +473,28 @@ function initPeriodVal() {
 
 function saveSelect() {
     if (Metric != undefined) {
-        window.localStorage.Metric = Metric;
+        window.localStorage.setItem(key + "Metric", Metric);
     }
     if (Dimension != undefined) {
-        window.localStorage.Dimension = Dimension;
+        window.localStorage.setItem(key + "Dimension", Dimension);
     }
     if (RangeTop != undefined) {
-        window.localStorage.RangeTop = RangeTop;
+        window.localStorage.setItem(key + "RangeTop", RangeTop);
     }
     if (Period != undefined) {
-        window.localStorage.Period = Period;
+        window.localStorage.setItem(key + "Period", Period);
     }
     if (PeriodVal != undefined) {
-        window.localStorage.PeriodVal = PeriodVal;
+        window.localStorage.setItem(key + "PeriodVal", PeriodVal);
     }
 }
 
 function hideProgressDialog() {
-    $(".mask").hide();
-    $(".loading").empty();
+    $(".loading").hide();
+    clickable = true;
 }
 
 function showProgressDialog() {
-    $(".mask").show();
-    var circle = new Sonic({
-
-        width: 50,
-        height: 50,
-        padding: 50,
-
-        strokeColor: '#000',
-
-        pointDistance: .01,
-        stepsPerFrame: 3,
-        trailLength: .7,
-
-        step: 'fader',
-
-        setup: function() {
-            this._.lineWidth = 5;
-        },
-
-        path: [
-            ['arc', 25, 25, 25, 0, 360]
-        ]
-
-    });
-
-    circle.play();
-    $(".loading").empty();
-    $(".loading").append(circle.canvas);
+    $(".loading").show();
+    clickable = false;
 }
