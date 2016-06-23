@@ -242,9 +242,9 @@ function getSaleTargetsData() {
             }
         }],
         success: function(response) {
-            dismissProgressDialog();
             var actionResponse = response.wacomponents.wacomponent[0].actions.action[0].resresult;
             if (actionResponse.flag == "1") {
+                dismissProgressDialog();
                 showErrorView(actionResponse.desc);
                 return;
             } else {
@@ -255,6 +255,7 @@ function getSaleTargetsData() {
                     data = [];
                 }
                 initData(data);
+                dismissProgressDialog();
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -451,6 +452,23 @@ function initDepartment() {
             }
         })
 
+    //删除没有的部门
+    $.each(selectDepartment,function(index,val){
+        if(getDepartmentById(val) == undefined){
+            selectDepartment.splice(index,1);
+        }
+    })
+
+    function getDepartmentById(referId){
+        var temp = undefined;
+        $.each(departments,function(index,department){
+            if(department.referid == referId){
+                temp = department;
+                return;
+            }
+        })
+        return temp;
+    }
         //全选
     if (isFullEqual && selectDepartment.length >= departments.length) {
         $(".nav-list-04 p:eq(0) label span.icon-check").addClass("icon-check-on");
@@ -869,6 +887,7 @@ function showErrorView(tip){
     $(".tip").show();
     $(".target-title span").empty();
     $(".target-list ul").empty();
+    $(".clerk").empty();
 }
 
 function saveSelect() {
