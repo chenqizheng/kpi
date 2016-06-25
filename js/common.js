@@ -38,6 +38,9 @@ function getUrlParam(name) {
 }
 
 function fmoney(s, n) {
+    if(isNaN(s)){
+        return s;
+    }
     var start = "";
     if(s < 0 ){
         s = Math.abs(s);

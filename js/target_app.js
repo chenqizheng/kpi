@@ -746,14 +746,12 @@ function initData(dataList) {
     var wh = 0;
     $(".clerk li").each(function(index,content){
         wh += $(content).outerWidth() + 10;
-        console.log("content = " + $(content).outerWidth());
     })
-    console.log("clerk width = " + wh);
     var w = $(window).width();
     $('.clerk').width(wh + 20 <= w ? w - 20: wh);
     $('.clerk').hide();
     $('.clerk').show();
-
+    $('.clerk').scrollLeft = 0;
     // var y = 0;
     // var lt = wh - w;
     // $(".clerk").swipe({
