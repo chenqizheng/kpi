@@ -136,6 +136,7 @@ function getData() {
             hideProgressDialog();
             xVal = [];
             yVal = [];
+            rank = [];
             var response;
             if (Object.prototype.toString.call(responseStr) === "[object String]") {
                 response = JSON.parse(responseStr);
@@ -151,11 +152,12 @@ function getData() {
             if (kpilist.datalist instanceof Array) {
                 var isIgnoreMine = false;
                 for (var i = 0; i < kpilist.datalist.length; i++) {
-                    if (i == 0 && Dimension == "Department") {
+                    var data = kpilist.datalist[i];
+                    if (i == 0 && (Dimension == "Department" && data.rank != "Error")) {
                         isIgnoreMine = true;
                         continue;
                     }
-                    var data = kpilist.datalist[i];
+
                     var index = i - (isIgnoreMine ? 1 : 0);
                     xVal[index] = data.dimensionVal;
                     yVal[index] = data.metricVal;
@@ -243,7 +245,7 @@ function initList(unit) {
     var myRank = (yVal[0] == '0' ? "" : (isError ? "" : ("第" + rank[0] + "名")));
     $(".person-info .left h4").text(xVal[0]);
     $(".person-info .left p").text(myRank);
-    $(".person-info span ").text(getYVal(yVal[0]) + ((unit == undefined) ? "" : unit));
+
     $(".person-list ul").empty();
     var startIndex = 0;
     var isDepartment = false;
@@ -257,6 +259,21 @@ function initList(unit) {
         $(".person-info").show();
         startIndex = 1;
     }
+    if(isError){
+        $(".person-info").show();
+        $(".person-info span ").hide();
+        $(".person-list").hide();
+    } else {
+        if(isDepartment){
+            $(".person-info").hide();
+            $(".person-list").show();
+        } else {
+            $(".person-info span ").show();
+            $(".person-info span ").text(getYVal(yVal[0]) + ((unit == undefined) ? "" : unit));
+            $(".person-list").show();
+        }
+    }
+
     for (var i = startIndex; i < xVal.length; i++) {
         var progress = yVal[i] / max * 100;
         var temp = isDepartment ? i + 1 : i;

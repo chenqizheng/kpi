@@ -38,7 +38,7 @@ function getUrlParam(name) {
 }
 
 function fmoney(s, n) {
-    if(isNaN(s)){
+    if(isNaN(s) || s == ""){
         return s;
     }
     var start = "";
