@@ -313,6 +313,12 @@ function getHRPersonList() {
                         }, {
                             "value": deptIds,
                             "@id": "deptids"
+                        },{
+                            "value": "0",
+                            "@id": "startline"
+                        },{
+                            "value": "10000",
+                            "@id": "count"
                         }]
                     }
                 }]
@@ -372,6 +378,12 @@ function getData() {
                         }, {
                             "value": "",
                             "@id": "condition"
+                        },{
+                            "value": "0",
+                            "@id": "startline"
+                        },{
+                            "value": "10000",
+                            "@id": "count"
                         }]
                     }
                 }]
