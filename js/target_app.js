@@ -707,10 +707,6 @@ function initData(dataList) {
                 memberIndex++;
                 continue;
             }
-            //接口返回合计数，前端不需要
-            if (Object.getOwnPropertyNames(data).length - 4 - 1 < memberIndex) {
-                break;
-            }
 
             if (i == 0) {
                 temp = new Object();
@@ -859,6 +855,9 @@ function initDataContent(target) {
             "</li>");
 
         function getDataTitle(index) {
+            if(target.data.length - 1 == index){
+                return "合计";
+            }
             var title = report_year + "年";
             if (periodIndex == 0) {
                 title = title + hanzi[report_period2 - 1] + "月" + "第" + hanzi[index] + "周";
