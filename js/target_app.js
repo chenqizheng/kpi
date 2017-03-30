@@ -689,11 +689,15 @@ function initData(dataList) {
     var select = 0;
     var index = 0;
     targetData = [];
+    var total = new Object();
+    total.name = '合计';
+    total.data = [];
+    var totalList = total.data;
+    var totalMax = 0;
     for (var userId in dataList) {
         var userData = new Object();
         var data = dataList[userId];
         var name = data.demensionName;
-        $(".clerk").append("<li " + (select == index ? "class=\"active\"" : "") + "><a href=\"#\">" + name + "</a></li>");
         index++;
         userData.userId = userId;
         userData.name = name;
@@ -708,24 +712,42 @@ function initData(dataList) {
                 continue;
             }
 
+
+            if(totalList[list.length] == undefined){
+                var temp = new Object();
+                temp.realval = 0;
+                temp.targetval = 0;
+                temp.diff = 0;
+                temp.rate = '0%';
+                totalList.push(temp);
+            }
+            var memberTotal = totalList[list.length];
+
             if (i == 0) {
                 temp = new Object();
                 temp.realval = data[member]
                 if (max < data[member]) {
                     max = data[member];
                 }
+                memberTotal.realval = memberTotal.realval + temp.realval;
                 i++;
             } else if (i == 1) {
                 temp.targetval = data[member]
                 if (max < data[member]) {
                     max = data[member];
                 }
+                memberTotal.targetval = memberTotal.targetval + temp.targetval;
                 i++;
             } else if (i == 2) {
                 temp.diff = data[member]
+                memberTotal.diff = memberTotal.diff + temp.diff;
                 i++;
             } else if (i == 3) {
-                temp.rate = data[member]
+                temp.rate = data[member];
+                var rate = temp.rate.substring(0,temp.rate.length-1);
+                var beforRate = memberTotal.rate.substring(0,memberTotal.rate.length-1);
+                var rateTotal = parseFloat(beforRate) + parseFloat(rate);
+                memberTotal.rate = rateTotal + '%';
                 i = 0;
                 list[list.length] = temp;
             }
@@ -735,6 +757,12 @@ function initData(dataList) {
         userData.max = max;
         targetData[targetData.length] = userData;
     }
+    var maxTarget = totalList[totalList.length -1];
+    total.max = maxTarget.targetval > maxTarget.realval ? maxTarget.targetval:maxTarget.realval;
+    targetData.splice(0,0,total);
+    targetData.map(function(target,index) {
+        $(".clerk").append("<li " + (select == index ? "class=\"active\"" : "") + "><a href=\"#\">" + target.name + "</a></li>");
+    })
 
     $(".clerk li a").each(function(index, content) {
         console.log("clerk width = " + $(content).outerWidth());
