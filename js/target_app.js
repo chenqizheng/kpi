@@ -744,10 +744,8 @@ function initData(dataList) {
                 i++;
             } else if (i == 3) {
                 temp.rate = data[member];
-                var rate = temp.rate.substring(0,temp.rate.length-1);
-                var beforRate = memberTotal.rate.substring(0,memberTotal.rate.length-1);
-                var rateTotal = parseFloat(beforRate) + parseFloat(rate);
-                memberTotal.rate = rateTotal + '%';
+                var rateTotal = temp.realval / temp.targetval;
+                memberTotal.rate = rateTotal.toFixed(2) + '%';
                 i = 0;
                 list[list.length] = temp;
             }
