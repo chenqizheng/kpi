@@ -744,8 +744,17 @@ function initData(dataList) {
                 i++;
             } else if (i == 3) {
                 temp.rate = data[member];
-                var rateTotal = temp.realval / temp.targetval;
-                memberTotal.rate = rateTotal.toFixed(2) + '%';
+                if(memberTotal.targetval == 0 ){
+                    memberTotal.rate = '0%';
+                } else {
+                    var rateTotal = memberTotal.realval / memberTotal.targetval * 100;
+                    var rateTotalStr = rateTotal + '';
+                    //不四舍五入，PC没四舍五入
+                    if(rateTotalStr.indexOf(".") != -1){
+                        rateTotalStr = rateTotalStr.substring(0,rateTotalStr.lastIndexOf('.')+3);
+                    }
+                    memberTotal.rate = rateTotalStr + '%';
+                }
                 i = 0;
                 list[list.length] = temp;
             }
