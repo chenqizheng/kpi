@@ -876,7 +876,7 @@ function initDataContent(target) {
         //+2 原因是为了柱状图有一点点
         var realValPercent = target.max == 0 ? 2 : val.realval * 68 / target.max + 2;
         var targetValPercent = target.max == 0 ? 2 :val.targetval * 68 / target.max + 2;
-        $(".target-list ul").append("<li>" +
+        $(".target-list ul").append("<li" + ((index == target.data.length - 1) ? " class=\"total\"" : "") + ">" +
             "<h5>" + getDataTitle(index) + "</h5>" +
             "<div class=\"target-01\">差异<span>" + formatData(val.diff) + "</span>完成率<em>" + val.rate + "</em></div>" +
             "<div class=\"progress\">" +
