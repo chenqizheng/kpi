@@ -764,9 +764,14 @@ function initData(dataList) {
         userData.max = max;
         targetData[targetData.length] = userData;
     }
-    var maxTarget = totalList[totalList.length -1];
-    total.max = maxTarget.targetval > maxTarget.realval ? maxTarget.targetval:maxTarget.realval;
-    targetData.splice(0,0,total);
+    if(targetData.length != 0 ){
+        var maxTarget = totalList[totalList.length -1];
+        if(maxTarget != undefined){
+            total.max = maxTarget.targetval > maxTarget.realval ? maxTarget.targetval:maxTarget.realval;
+        }
+        targetData.splice(0,0,total);
+    }
+
     targetData.map(function(target,index) {
         $(".clerk").append("<li " + (select == index ? "class=\"active\"" : "") + "><a href=\"#\">" + target.name + "</a></li>");
     })
